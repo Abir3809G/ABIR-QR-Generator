@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>QR Code Generator</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔳</text></svg>" />
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app">
+    <header class="topbar">
+      <div class="brand">
+        <span class="brand-icon">▦</span>
+        <span class="brand-name">QR Code Generator</span>
+      </div>
+      <p class="brand-sub">যেকোনো টেক্সট, লিংক, WiFi, Contact দিয়ে QR কোড বানান — সরাসরি আপনার ব্রাউজারে</p>
+    </header>
+
+    <main class="layout">
+      <!-- LEFT: FORM -->
+      <section class="panel form-panel">
+        <div class="tabs" id="typeTabs">
+          <button class="tab active" data-type="text">টেক্সট</button>
+          <button class="tab" data-type="url">লিংক</button>
+          <button class="tab" data-type="wifi">WiFi</button>
+          <button class="tab" data-type="vcard">Contact</button>
+          <button class="tab" data-type="email">ইমেইল</button>
+          <button class="tab" data-type="phone">ফোন</button>
+          <button class="tab" data-type="sms">SMS</button>
+          <button class="tab" data-type="location">লোকেশন</button>
+        </div>
+
+        <div class="form-body">
+          <!-- TEXT -->
+          <div class="field-group" data-form="text">
+            <label>টেক্সট লিখুন</label>
+            <textarea id="f-text" rows="4" placeholder="এখানে যেকোনো টেক্সট লিখুন..."></textarea>
+          </div>
+
+          <!-- URL -->
+          <div class="field-group" data-form="url" hidden>
+            <label>ওয়েবসাইট লিংক</label>
+            <input type="text" id="f-url" placeholder="https://example.com" />
+          </div>
+
+          <!-- WIFI -->
+          <div class="field-group" data-form="wifi" hidden>
+            <label>নেটওয়ার্ক নাম (SSID)</label>
+            <input type="text" id="f-wifi-ssid" placeholder="My_WiFi" />
+            <label>পাসওয়ার্ড</label>
+            <input type="text" id="f-wifi-pass" placeholder="password" />
+            <label>Encryption</label>
+            <select id="f-wifi-enc">
+              <option value="WPA">WPA/WPA2</option>
+              <option value="WEP">WEP</option>
+              <option value="nopass">নেই (Open)</option>
+            </select>
+            <label class="checkbox-row"><input type="checkbox" id="f-wifi-hidden" /> Hidden নেটওয়ার্ক</label>
+          </div>
+
+          <!-- VCARD -->
+          <div class="field-group" data-form="vcard" hidden>
+            <label>পুরো নাম</label>
+            <input type="text" id="f-vc-name" placeholder="Mohammad Ayyub Bhuiya Abir" />
+            <label>কোম্পানি / প্রতিষ্ঠান</label>
+            <input type="text" id="f-vc-org" placeholder="Company name" />
+            <label>ফোন নম্বর</label>
+            <input type="text" id="f-vc-phone" placeholder="01643573300" />
+            <label>ইমেইল</label>
+            <input type="text" id="f-vc-email" placeholder="you@example.com" />
+            <label>ওয়েবসাইট</label>
+            <input type="text" id="f-vc-url" placeholder="https://example.com" />
+            <label>ঠিকানা</label>
+            <input type="text" id="f-vc-address" placeholder="Bandar, Narayanganj, Bangladesh" />
+          </div>
+
+          <!-- EMAIL -->
+          <div class="field-group" data-form="email" hidden>
+            <label>ইমেইল ঠিকানা</label>
+            <input type="text" id="f-email-to" placeholder="you@example.com" />
+            <label>Subject</label>
+            <input type="text" id="f-email-subject" placeholder="বিষয়" />
+            <label>মেসেজ</label>
+            <textarea id="f-email-body" rows="3" placeholder="মেসেজ লিখুন..."></textarea>
+          </div>
+
+          <!-- PHONE -->
+          <div class="field-group" data-form="phone" hidden>
+            <label>ফোন নম্বর</label>
+            <input type="text" id="f-phone" placeholder="+8801643573300" />
+          </div>
+
+          <!-- SMS -->
+          <div class="field-group" data-form="sms" hidden>
+            <label>ফোন নম্বর</label>
+            <input type="text" id="f-sms-number" placeholder="+8801643573300" />
+            <label>মেসেজ</label>
+            <textarea id="f-sms-body" rows="3" placeholder="মেসেজ লিখুন..."></textarea>
+          </div>
+
+          <!-- LOCATION -->
+          <div class="field-group" data-form="location" hidden>
+            <label>Latitude</label>
+            <input type="text" id="f-loc-lat" placeholder="23.6238" />
+            <label>Longitude</label>
+            <input type="text" id="f-loc-lng" placeholder="90.5000" />
+            <p class="hint">Google Maps-এ লোকেশনে right-click করে coordinates কপি করতে পারেন।</p>
+          </div>
+        </div>
+
+        <hr class="divider" />
+
+        <div class="customize">
+          <h3>কাস্টমাইজ করুন</h3>
+
+          <div class="row two">
+            <div>
+              <label>সাইজ / Resolution (px)</label>
+              <input type="number" id="opt-size" value="400" min="100" max="2000" step="10" />
+            </div>
+            <div>
+              <label>Error Correction</label>
+              <select id="opt-ecc">
+                <option value="L">Low (L)</option>
+                <option value="M" selected>Medium (M)</option>
+                <option value="Q">Quartile (Q)</option>
+                <option value="H">High (H)</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="row two">
+            <div>
+              <label>QR কালার</label>
+              <input type="color" id="opt-fg" value="#000000" />
+            </div>
+            <div>
+              <label>ব্যাকগ্রাউন্ড কালার</label>
+              <input type="color" id="opt-bg" value="#ffffff" />
+            </div>
+          </div>
+
+          <div class="row">
+            <label>Dot Style</label>
+            <select id="opt-dots">
+              <option value="square">Square</option>
+              <option value="dots">Dots</option>
+              <option value="rounded">Rounded</option>
+              <option value="classy">Classy</option>
+              <option value="classy-rounded">Classy Rounded</option>
+              <option value="extra-rounded">Extra Rounded</option>
+            </select>
+          </div>
+
+          <div class="row">
+            <label>লোগো (ঐচ্ছিক)</label>
+            <input type="file" id="opt-logo" accept="image/*" />
+          </div>
+        </div>
+      </section>
+
+      <!-- RIGHT: PREVIEW -->
+      <section class="panel preview-panel">
+        <h3>প্রিভিউ</h3>
+        <div id="qr-preview" class="qr-canvas"></div>
+
+        <div class="download-row">
+          <button class="btn primary" id="dl-png">PNG ডাউনলোড</button>
+          <button class="btn primary" id="dl-jpg">JPG ডাউনলোড</button>
+          <button class="btn primary" id="dl-svg">SVG ডাউনলোড</button>
+          <button class="btn primary" id="dl-pdf">PDF ডাউনলোড</button>
+        </div>
+
+        <p class="footnote">এই QR কোডের কোনো মেয়াদ নেই — এটা সরাসরি আপনার দেওয়া তথ্য বহন করে, তাই সবসময় কাজ করবে।</p>
+      </section>
+    </main>
+
+    <footer class="pagefoot">
+      <p>Static QR Code Generator · Client-side only, no server needed · GitHub Pages-এ deploy করার জন্য প্রস্তুত</p>
+    </footer>
+  </div>
+
+  <script src="vendor/qr-code-styling.js"></script>
+  <script src="vendor/jspdf.umd.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
