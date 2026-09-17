@@ -161,6 +161,38 @@ textarea { resize: vertical; }
   gap: 14px;
 }
 
+.size-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1.2fr;
+  gap: 10px;
+  align-items: end;
+}
+
+.size-field {
+  display: flex;
+  flex-direction: column;
+}
+
+.size-sub-label {
+  font-size: 0.75rem;
+  color: var(--muted);
+  margin-bottom: 4px;
+}
+
+.size-field input:disabled {
+  background: #f0f0f2;
+  color: var(--muted);
+}
+
+@media (max-width: 480px) {
+  .size-row {
+    grid-template-columns: 1fr 1fr;
+  }
+  .unit-field {
+    grid-column: 1 / -1;
+  }
+}
+
 input[type="color"] {
   width: 100%;
   height: 40px;

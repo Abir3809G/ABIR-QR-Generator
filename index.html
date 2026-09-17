@@ -114,20 +114,28 @@
         <div class="customize">
           <h3>কাস্টমাইজ করুন</h3>
 
-          <div class="row two">
-            <div>
-              <label>সাইজ / Resolution (px)</label>
-              <input type="number" id="opt-size" value="400" min="100" max="2000" step="10" />
+          <div class="row">
+            <label>সাইজ / Resolution</label>
+            <div class="size-row">
+              <div class="size-field">
+                <span class="size-sub-label">Width</span>
+                <input type="number" id="opt-width" value="400" min="1" step="any" />
+              </div>
+              <div class="size-field">
+                <span class="size-sub-label">Height</span>
+                <input type="number" id="opt-height" value="400" min="1" step="any" disabled />
+              </div>
+              <div class="size-field unit-field">
+                <span class="size-sub-label">একক</span>
+                <select id="opt-unit">
+                  <option value="px" selected>Pixel (px)</option>
+                  <option value="in">Inch (in)</option>
+                  <option value="cm">Centimeter (cm)</option>
+                  <option value="mm">Millimeter (mm)</option>
+                </select>
+              </div>
             </div>
-            <div>
-              <label>Error Correction</label>
-              <select id="opt-ecc">
-                <option value="L">Low (L)</option>
-                <option value="M" selected>Medium (M)</option>
-                <option value="Q">Quartile (Q)</option>
-                <option value="H">High (H)</option>
-              </select>
-            </div>
+            <p class="hint">QR কোড সবসময় বর্গাকার (square) হয়, তাই Width ও Height সমান রাখা হয়েছে।</p>
           </div>
 
           <div class="row two">
